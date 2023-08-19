@@ -1,0 +1,4 @@
+#-i https://pypi.python.org/simple/
+#scikit-learn==1.3.0
+scikit-learn==1.3.0
+matplotlib==3.7.2

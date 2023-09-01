@@ -8,35 +8,32 @@ import matplotlib.pyplot as plt
 
 # Import datasets, classifiers and performance metrics
 from sklearn import metrics
-from utils import preprocess_data, train_model, split_data,read_digits
+from utils import preprocess_data, train_model, split_train_dev_test, read_digits, predict_and_eval
 
 # The digits dataset consists of 8x8 pixel images of digits. The images attribute of the dataset stores 8x8 arrays of grayscale values for each image. We will use these arrays to visualize the first 4 images. The target attribute of the dataset stores the digit each image represents and this is included in the title of the 4 plots below.
 # Note: if we were working from image files (e.g., ‘png’ files), we would load them using matplotlib.pyplot.imread.
 
-
 # 1. Data Loading
-x,y = read_digits()
+x, y = read_digits()
 
-# 3. Data splitting
-X_train, X_test, y_train, y_test = split_data(x, y, test_size=0.3);
+# 2. Data splitting
+X_train, X_dev, X_test, y_train, y_dev, y_test = split_train_dev_test(x, y, test_size=0.3, dev_size=0.2)
 
-# 4. Data Preprocessing
+# 3. Data Preprocessing
 X_train = preprocess_data(X_train)
+X_dev = preprocess_data(X_dev)
 X_test = preprocess_data(X_test)
 
-# 5. Train the data
+# 4. Train the data
 model = train_model(X_train, y_train, {'gamma': 0.001}, model_type='svm')
 
-
-
 # Predict the value of the digit on the test subset
-# 6. Model Predictino
-predicted = model.predict(X_test)
+# 5. Model Prediction
+predicted = predict_and_eval(model, X_test, y_test)
 
 # Below we visualize the first 4 test samples and show their predicted digit value in the title.
 
-
-# 7. Quantitative sanity check 
+# 6. Visualize Predictions
 _, axes = plt.subplots(nrows=1, ncols=4, figsize=(10, 3))
 for ax, image, prediction in zip(axes, X_test, predicted):
     ax.set_axis_off()
@@ -46,7 +43,7 @@ for ax, image, prediction in zip(axes, X_test, predicted):
 
 # classification_report builds a text report showing the main classification metrics.
 
-#8. Model Evaluation
+# 7. Model Evaluation
 print(
     f"Classification report for classifier {model}:\n"
     f"{metrics.classification_report(y_test, predicted)}\n"
@@ -54,7 +51,7 @@ print(
 
 # We can also plot a confusion matrix of the true digit values and the predicted digit values.
 
-disp = metrics.ConfusionMatrixDisplay.from_predictions(y_test, predicted)
+disp = metrics.ConfusionMatrixDisplay.from_estimator(model, X_test, y_test)
 disp.figure_.suptitle("Confusion Matrix")
 print(f"Confusion matrix:\n{disp.confusion_matrix}")
 

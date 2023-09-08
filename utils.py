@@ -1,6 +1,6 @@
 # Import datasets, classifiers and performance metrics
 from sklearn import svm, datasets
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 
 # Read digits
 def read_digits():
@@ -43,3 +43,17 @@ def predict_and_eval(model, X_test, y_test):
 
     # Quantitative sanity check
     return predicted
+
+# Function for hyperparameter tuning
+def tune_hparams(X, y, X_dev, y_dev, param_grid, model_type='svm'):
+    if model_type == 'svm':
+        clf = svm.SVC()
+    
+    grid_search = GridSearchCV(clf, param_grid, cv=3)
+    grid_search.fit(X, y)
+    
+    best_hparams = grid_search.best_params_
+    best_model = grid_search.best_estimator_
+    best_accuracy = grid_search.best_score_
+    
+    return best_hparams, best_model, best_accuracy

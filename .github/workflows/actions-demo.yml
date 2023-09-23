@@ -22,3 +22,4 @@ jobs:
         run:  pip3 install --no-cache-dir -r requirements.txt
       - name: Run test cases
         run: python plot_digits_classification.py
+      - run: echo "Program Executed Successfully For ML_Ops_Quiz_1"

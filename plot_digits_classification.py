@@ -37,8 +37,18 @@ test_sizes = [0.1, 0.2, 0.3]
 # 1 . Get the dataests
 X, y = read_digits()
 
+# Print the number of total samples in the dataset
+total_samples = len(X)
+print(f'The number of total samples in the dataset: {total_samples}')
+
+# Get the size (height and width) of the images in the dataset
+if total_samples > 0:
+    height, width = X[0].shape
+    print(f'Size (height x width) of the images in the dataset: {height} x {width}')
+
 # Create combinations using itertools.product
 dev_test_combinations = [{'test_size': test, 'dev_size': dev} for test, dev in itertools.product(test_sizes, dev_sizes)]
+
 #3. Data Splitting
 
 #X_train, X_test, y_train, y_test = split_data(X,y, test_size=0.3)
@@ -80,13 +90,9 @@ for dev_test in dev_test_combinations:
     # Accuracy Evaluation
     accuracy_test = predict_and_eval(result,X_test, y_test)
 
-    # print("Accuracy on Test Set:", accuracy_test)
-    # print("Classification Report on Test Set:\n", classification_rep_test)
-    # print("Confusion Matrix on Test Set:\n", confusion_mat_test)
-
     # Print all combinations 
-    print(f'test_size={test_size}, dev_size={dev_size}, train_size={train_size}, train_acc:{train_acc} dev_acc:{best_accuracy} test_acc: {accuracy_test}')
-    print(f' Best params:{best_hparams}')
+    #print(f'test_size={test_size}, dev_size={dev_size}, train_size={train_size}, train_acc:{train_acc} dev_acc:{best_accuracy} test_acc: {accuracy_test}')
+    #print(f' Best params:{best_hparams}')
 # Class work - 09.02.23
 #   - Take all combinations of Gamma and C 
 # best_acc_so_far = -1

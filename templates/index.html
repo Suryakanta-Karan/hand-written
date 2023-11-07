@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digit Comparison</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Digit Comparison</h1>
+    <form id="digit-form">
+        <input type="file" name="image1" accept="image/*">
+        <input type="file" name="image2" accept="image/*">
+        <button type="submit">Compare</button>
+    </form>
+    <div id="result" style="display: none;">
+        <p id="comparison-result">Result: <span id="comparison-text"></span></p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#digit-form").submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '/compare_digits',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.result === true) {
+                            $("#comparison-text").text("True");
+                        } else {
+                            $("#comparison-text").text("False");
+                        }
+                        $("#result").show();
+                    },
+                    error: function() {
+                        $("#result").hide();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

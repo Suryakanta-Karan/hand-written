@@ -40,7 +40,7 @@ def main():
         print("Model training complete for test_frac={}, dev_frac={}".format(test_frac, dev_frac))
 
     # Save the trained model (outside the loop)
-    model_path = '/home/suryakantak/hand-written/app/model/model.pkl'
+    model_path = '/home/suryakantak/hand-written/API/best_model.pkl'
     joblib.dump(trained_model, model_path)
 
 if __name__ == "__main__":

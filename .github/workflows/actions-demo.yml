@@ -45,5 +45,5 @@ jobs:
       - name: Run Tests
         run: |
           echo "🔍 Running tests..."
-          cd API
+          cd Flask_API_Call
           pytest -s

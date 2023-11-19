@@ -6,7 +6,8 @@ from io import BytesIO
 import threading
 
 # Load the model
-model = joblib.load('/home/suryakantak/hand-written/API/best_model.pkl')
+#model = joblib.load('/home/suryakantak/hand-written/API/best_model.pkl')
+model = joblib.load('best_model.pkl')
 
 app = Flask(__name__)
 lock = threading.Lock()

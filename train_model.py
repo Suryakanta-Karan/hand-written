@@ -1,6 +1,8 @@
-from sklearn import datasets, preprocessing
+from sklearn import datasets, preprocessing, model_selection, linear_model
 import itertools
 import joblib
+import os
+import numpy as np
 from utils import hyperparameter_tuning, prepare_data_splits
 
 def main():
@@ -17,28 +19,32 @@ def main():
     X_data_normalized = preprocessing.normalize(X_data, norm='l2')
 
     # Define parameter ranges
-    gamma_values = [0.001, 0.01, 0.1, 1, 100]
-    C_values = [0.1, 1, 2, 5, 10]
-    all_param_combinations = list(itertools.product(gamma_values, C_values))
+    solvers = ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga']
+    all_models = {}
 
-    # Define test and dev set sizes
-    test_sizes = [0.1, 0.2, 0.3]
-    dev_sizes = [0.1, 0.2, 0.3]
-    size_combinations = list(itertools.product(test_sizes, dev_sizes))
+    for solver in solvers:
+        # Define Logistic Regression with the current solver
+        model = linear_model.LogisticRegression(solver=solver)
 
-    for test_frac, dev_frac in size_combinations:
-        # Split the normalized data into train, dev, and test sets
-        X_train, Y_train, X_dev, Y_dev, X_test, Y_test = prepare_data_splits(X_data_normalized, y_data, test_frac, dev_frac)
+        # 5-fold cross-validation to report mean and std of performance
+        cv_scores = model_selection.cross_val_score(model, X_data_normalized, y_data, cv=5)
+        mean_score = np.mean(cv_scores)
+        std_score = np.std(cv_scores)
+        print(f"Solver: {solver}, Mean Accuracy: {mean_score}, Std Accuracy: {std_score}")
 
-        # Tune hyperparameters
-        trained_model, _, _, _, _ = hyperparameter_tuning(X_train, Y_train, X_dev, Y_dev, all_param_combinations)
+        # Train the model on the full dataset
+        model.fit(X_data_normalized, y_data)
 
-        # Print model training logs to the console
-        print("Model training complete for test_frac={}, dev_frac={}".format(test_frac, dev_frac))
+        # Save the model
+        model_name = f"M22AIE207_lr_{solver}.joblib"  # Replace <rollno> with your actual roll number
+        model_path = os.path.join('/home/suryakantak/hand-written/API/', model_name)
+        joblib.dump(model, model_path)
 
-    # Save the trained model (outside the loop)
-    model_path = '/home/suryakantak/hand-written/API/best_model.pkl'
-    joblib.dump(trained_model, model_path)
+        # Store the trained model for future use
+        all_models[solver] = model
+
+    # Push models to the GitHub repository (you'll need appropriate setup for this)
+    # Code to push models to GitHub repository
 
 if __name__ == "__main__":
     main()

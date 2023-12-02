@@ -58,11 +58,11 @@ LR_MODEL_DIR = "../q2_models"
 
 def test_solver_name_in_filename():
     model_filenames = [
-        "m22aie208_lr_lbfgs.joblib",
-        "m22aie208_lr_liblinear.joblib",
-        "m22aie208_lr_newton-cg.joblib",
-        "m22aie208_lr_sag.joblib",
-        "m22aie208_lr_saga.joblib"
+        "M22AIE207_lr_lbfgs.joblib",
+        "M22AIE207_lr_liblinear.joblib",
+        "M22AIE207_lr_newton-cg.joblib",
+        "M22AIE207_lr_sag.joblib",
+        "M22AIE207_lr_saga.joblib"
     ]
     for model_filename in model_filenames:
         filename_solver = model_filename.split("_")[-1].split(".")[0]

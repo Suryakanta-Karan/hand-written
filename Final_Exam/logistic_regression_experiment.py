@@ -44,7 +44,7 @@ for solver in solvers:
     print(f"\t Mean and Std with solver with 5-CROSS CV '{solver}': {cv_scores.mean()}, {cv_scores.std()}")
     print(f"\t", "*"*25, "\n")
     # Save the model
-    filename = f"m22aie208_lr_{solver}.joblib"
+    filename = f"M22AIE207_lr_{solver}.joblib"
     save_model(clf, os.path.join("q2_models", filename))
 print(f"\n\n[Q2] END OF ANSWER")
 print(f"*"*50)

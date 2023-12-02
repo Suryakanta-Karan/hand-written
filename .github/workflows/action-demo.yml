@@ -87,6 +87,7 @@ jobs:
       - name: Run Tests
         run: |
           echo "🔍 NORMALIZATION AND TRAINING WiTH LR SOLVERS..."
+          cd Final_Exam
           python logistic_regression_experiment.py
 
       - name: Run Tests

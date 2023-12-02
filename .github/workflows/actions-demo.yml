@@ -45,5 +45,5 @@ jobs:
       - name: Run Tests
         run: |
           echo "🔍 Running tests..."
-          cd Final_Exam
-          pytest Unit_Test_Q3.py 
+          cd /home/suryakantak/hand-written/API/
+          pytest -s Unit_Test_Q3.py 

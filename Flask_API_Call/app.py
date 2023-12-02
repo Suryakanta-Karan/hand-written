@@ -7,8 +7,8 @@ import threading
 
 # Load the model
 #model = joblib.load('/home/suryakantak/hand-written/API/best_model.pkl')
-model = joblib.load('best_model.pkl')
-
+#model = joblib.load('/home/suryakantak/hand-written/Flask_API_Call/best_model.pkl')
+model = joblib.load('/home/suryakantak/hand-written/API/M22AIE207_lr_lbfgs.joblib')
 app = Flask(__name__)
 lock = threading.Lock()
 

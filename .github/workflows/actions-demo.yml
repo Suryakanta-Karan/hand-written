@@ -46,4 +46,4 @@ jobs:
         run: |
           echo "🔍 Running tests..."
           cd Final_Exam
-          pytest -s Unit_Test_Q3.py 
+          pytest Unit_Test_Q3.py 

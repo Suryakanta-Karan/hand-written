@@ -45,5 +45,5 @@ jobs:
       - name: Run Tests
         run: |
           echo "🔍 Running tests..."
-          cd hand-written
+          cd Final_Exam
           pytest -s Unit_Test_Q3.py 

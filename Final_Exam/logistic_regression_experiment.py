@@ -8,17 +8,17 @@ import os
 
 os.makedirs("q2_models", exist_ok=True)
 
-def read_digits():
+def load_data():
     digits = datasets.load_digits()
     X = digits.images
     y = digits.target
     return X, y 
 
-def save_model(model, filename):
+def save_trained_model(model, filename):
     joblib.dump(model, filename)
 
 # Read and preprocess the dataset
-X, y = read_digits()
+X, y = load_data()
 X = preprocess_data(X)
 
 # Split data into train and test subsets
@@ -30,21 +30,22 @@ print(f"*"*50)
 print(f"[Q2] ANSWER IS FOLLOWING:\n\n")
 for solver in solvers:
     # Initialize and train logistic regression model
-    clf = LogisticRegression(solver=solver, max_iter=1000)
-    clf.fit(X_train, y_train)
+    logistic_model = LogisticRegression(solver=solver, max_iter=1000)
+    logistic_model.fit(X_train, y_train)
 
     # Predict and evaluate
-    predicted = clf.predict(X_test)
+    predicted = logistic_model.predict(X_test)
     accuracy = metrics.accuracy_score(y_test, predicted)
     print(f"\t", "*"*25)
     print(f"\t Accuracy with solver '{solver}': {accuracy}")
 
     # Cross-validation
-    cv_scores = cross_val_score(clf, X, y, cv=5)
-    print(f"\t Mean and Std with solver with 5-CROSS CV '{solver}': {cv_scores.mean()}, {cv_scores.std()}")
+    cv_scores = cross_val_score(logistic_model, X, y, cv=5)
+    print(f"\t Mean and Std with solver and 5-CROSS CV '{solver}': {cv_scores.mean()}, {cv_scores.std()}")
     print(f"\t", "*"*25, "\n")
-    # Save the model
-    filename = f"M22AIE207_lr_{solver}.joblib"
-    save_model(clf, os.path.join("q2_models", filename))
+    
+    # Save the trained model
+    filename = f"M22AIE207_lr_{solver}.joblib"  # Replace 'YourRollNumber' with your actual roll number
+    save_trained_model(logistic_model, os.path.join("q2_models", filename))
 print(f"\n\n[Q2] END OF ANSWER")
 print(f"*"*50)

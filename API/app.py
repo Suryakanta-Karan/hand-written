@@ -6,9 +6,9 @@ from io import BytesIO
 import os
 
 # Load the model
-#model = joblib.load('API/best_model.pkl')
+#model = joblib.load('/digits/API/best_model.pkl')
 model = joblib.load('best_model.pkl')
-SAVED_MODEL_DIR = "saved_model"
+SAVED_MODEL_DIR = "../saved_model"
 app = Flask(__name__)
 
 from sklearn.preprocessing import Normalizer

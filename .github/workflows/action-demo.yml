@@ -86,12 +86,12 @@ jobs:
       #     python mlOps_quiz2.py
       - name: Run Tests
         run: |
-          echo "🔍 NORMALIZATION AND TRAINING WiTH LR SOLVERS..."
+          echo "🔍 ANSWERS OF Q1 , Q2"
           cd Final_Exam
-          python logistic_regression_experiment.py
+          python logistic_regression_solver
 
       - name: Run Tests
         run: |
-          echo "🔍 ANSWERS OF [Q3]"
+          echo "🔍 ANSWERS OF Q3"
           cd API
           pytest -s
